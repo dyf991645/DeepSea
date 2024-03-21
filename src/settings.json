@@ -23,7 +23,6 @@
         "hb-nx-activity-log",
         "hb-nx-themes-installer",
         "hb-nxshell",
-        "hb-salty-nx-tool",
         "hb-simple-mod-downloader",
         "hb-simple-mod-manager",
         "hb-switch-time",
@@ -46,7 +45,7 @@
     {
       "name": "addition",
       "active": false,
-      "modules": ["hb-ldn_mitm"]
+      "modules": ["hb-ldn_mitm", "hb-salty-nx-tool"]
     }
   ],
   "moduleList": {
@@ -106,7 +105,7 @@
           "arguments": ["bootloader/hekate_*", "bootloader/update.bin"]
         },
         {
-          "name": "createDir",
+          "name": "create_dir",
           "arguments": ["atmosphere"]
         },
         {
@@ -560,6 +559,16 @@
         {
           "name": "extract",
           "arguments": [".*ovlmenu.*\\.zip"]
+        },{
+            "name": "create_dir",
+            "arguments": ["config/tesla"]
+          },
+        {
+          "name": "create_file",
+          "arguments": [
+            "config/tesla/config.ini",
+            "[tesla]\nkey_combo = ZL+ZR+DDOWN"
+          ]
         }
       ]
     },
@@ -637,17 +646,17 @@
         }
       ]
     },
-    "sysmodule-sys-patch":{
-        "repo": "sys-patch",
-        "regex": [],
-        "link": "https://sigmapatches.su/sys-patch.zip",
-        "filename": "sys-patch.zip",
-        "steps": [
-          {
-            "name": "extract",
-            "arguments": ["sys-patch.zip"]
-          }
-        ]
-      }
+    "sysmodule-sys-patch": {
+      "repo": "sys-patch",
+      "regex": [],
+      "link": "https://sigmapatches.su/sys-patch.zip",
+      "filename": "sys-patch.zip",
+      "steps": [
+        {
+          "name": "extract",
+          "arguments": ["sys-patch.zip"]
+        }
+      ]
+    }
   }
 }
