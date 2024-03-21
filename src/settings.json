@@ -21,7 +21,6 @@
         "hb-hbappstore",
         "hb-jksv",
         "hb-nx-activity-log",
-        "hb-nx-themes-installer",
         "hb-nxshell",
         "hb-simple-mod-downloader",
         "hb-simple-mod-manager",
@@ -45,7 +44,11 @@
     {
       "name": "addition",
       "active": false,
-      "modules": ["hb-ldn_mitm", "hb-salty-nx-tool"]
+      "modules": [
+        "hb-ldn_mitm", 
+        "hb-nx-themes-installer", 
+        "hb-salty-nx-tool"
+    ]
     }
   ],
   "moduleList": {
@@ -559,10 +562,11 @@
         {
           "name": "extract",
           "arguments": [".*ovlmenu.*\\.zip"]
-        },{
-            "name": "create_dir",
-            "arguments": ["config/tesla"]
-          },
+        },
+        {
+          "name": "create_dir",
+          "arguments": ["config/tesla"]
+        },
         {
           "name": "create_file",
           "arguments": [
