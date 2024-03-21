@@ -13,7 +13,6 @@ if __name__ == '__main__':
   args = parser.parse_args()
   
   load_dotenv()
-  value = os.getenv('GH_TOKEN')
 
   sdcard = FS()
   github = GH(os.getenv('GH_TOKEN'), args.update)
