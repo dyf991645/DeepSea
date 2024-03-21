@@ -39,7 +39,8 @@
         "sysmodule-nxovlloader",
         "sysmodule-salty-nx",
         "sysmodule-syscon",
-        "sysmodule-sysftpdlight"
+        "sysmodule-sysftpdlight",
+        "sysmodule-sys-patch"
       ]
     },
     {
@@ -635,6 +636,18 @@
           ]
         }
       ]
-    }
+    },
+    "sysmodule-sys-patch":{
+        "repo": "sys-patch",
+        "regex": [],
+        "link": "https://sigmapatches.su/sys-patch.zip",
+        "filename": "sys-patch.zip",
+        "steps": [
+          {
+            "name": "extract",
+            "arguments": ["sys-patch.zip"]
+          }
+        ]
+      }
   }
 }
