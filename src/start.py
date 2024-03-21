@@ -1,18 +1,22 @@
-import logging, json, argparse, shutil
+import logging, json, argparse, shutil, sys, os
 from gh import GH
 from fs import FS
+from dotenv import load_dotenv
+
 logging.basicConfig(format='[%(asctime)s] %(message)s', datefmt='%H:%M:%S')
 logging.getLogger().setLevel(logging.INFO)
 
 if __name__ == '__main__':
-    
+
   parser = argparse.ArgumentParser(description="Team Neptune's DeepSea build script.")
-  requiredNamed = parser.add_argument_group('Options required to build a release candidate')
-  requiredNamed.add_argument('-gt', '--githubToken', help='Github Token', required=True)
+  parser.add_argument('-u', '--update', action='store_true', help='Github Token', required=False)
   args = parser.parse_args()
+  
+  load_dotenv()
+  value = os.getenv('GH_TOKEN')
 
   sdcard = FS()
-  github = GH(args.githubToken)
+  github = GH(os.getenv('GH_TOKEN'), args.update)
 
   with open('./settings.json', 'r') as f:
     settings = json.load(f)
@@ -49,5 +53,3 @@ if __name__ == '__main__':
       logging.info(f"[{package['name']}] All modules processed.")
       logging.info(f"[{package['name']}] Creating ZIP")
       shutil.make_archive(f"deepsea-{package['name']}_v{settings['releaseVersion']}", 'zip', "./sd")
-
-

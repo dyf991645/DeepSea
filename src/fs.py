@@ -3,7 +3,7 @@ from pathlib import Path
 
 class FS():
     def __init__(self):
-        shutil.rmtree("./base", ignore_errors=True)
+        # shutil.rmtree("./base", ignore_errors=True)
         shutil.rmtree("./menv", ignore_errors=True)
         shutil.rmtree("./sd", ignore_errors=True)
         for elements in glob.glob(f"./*.zip"):
