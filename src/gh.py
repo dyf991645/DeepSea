@@ -1,11 +1,5 @@
-
-import pathlib
+import os, sys, shutil, logging, re, urllib.request, pathlib
 from github import Github
-import urllib.request
-import re
-import logging
-import os
-import sys
 
 class GH():
     def __init__(self, ghToken, update):
@@ -15,7 +9,8 @@ class GH():
 
     def downloadReleaseAssets(self, module):
         
-        if 'local' in module:
+        if 'local' in module and module['local']:
+            shutil.copytree(f"./asset/{module['repo']}", f"./base/{module['repo']}", dirs_exist_ok=True)
             return True
         
         fpath = f"./base/{module['repo']}/"

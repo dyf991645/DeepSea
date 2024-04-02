@@ -5,6 +5,7 @@
       "name": "standard",
       "active": true,
       "modules": [
+        "asset-amiibos",
         "base-atmosphere",
         "base-deepseaassets",
         "base-hekate",
@@ -13,6 +14,7 @@
         "boot-deepseacpr",
         "boot-tegraexplorer",
         "hb-aioupdater",
+        "hb-amiibo-generator",
         "hb-dbi",
         "hb-deepseatoolbox",
         "hb-edizon",
@@ -44,14 +46,25 @@
     {
       "name": "addition",
       "active": false,
-      "modules": [
-        "hb-ldn_mitm", 
-        "hb-nx-themes-installer", 
-        "hb-salty-nx-tool"
-    ]
+      "modules": ["hb-ldn_mitm", "hb-nx-themes-installer", "hb-salty-nx-tool"]
     }
   ],
   "moduleList": {
+    "asset-amiibos": {
+      "repo": "amiibo",
+      "link": "https://www.amiiboapi.com/api/amiibo",
+      "filename": "amiibo.json",
+      "steps": [
+        {
+          "name": "create_dir",
+          "arguments": ["emuiibo"]
+        },
+        {
+          "name": "move",
+          "arguments": ["amiibos.json", "emuiibo/amiibos.json"]
+        }
+      ]
+    },
     "base-atmosphere": {
       "repo": "Atmosphere-NX/Atmosphere",
       "regex": [".*atmosphere.*\\.zip"],
@@ -175,6 +188,23 @@
         {
           "name": "extract",
           "arguments": [".*aio-switch-updater.*\\.zip"]
+        }
+      ]
+    },
+    "hb-amiibo-generator": {
+      "repo": "Slluxx/AmiiboGenerator",
+      "regex": [".*AmiiboGenerator.*\\.nro"],
+      "steps": [
+        {
+          "name": "create_dir",
+          "arguments": ["switch/AmiiboGenerator"]
+        },
+        {
+          "name": "move",
+          "arguments": [
+            "AmiiboGenerator.nro",
+            "switch/AmiiboGenerator/AmiiboGenerator.nro"
+          ]
         }
       ]
     },
@@ -315,19 +345,12 @@
       ]
     },
     "hb-nx-activity-log": {
-      "repo": "tallbl0nde/NX-Activity-Log",
-      "regex": [".*NX-Activity-Log.*\\.nro"],
+      "repo": "zdm65477730/NX-Activity-Log",
+      "regex": [".*NX-Activity-Log.*\\.zip"],
       "steps": [
         {
-          "name": "create_dir",
-          "arguments": ["switch/NX-Activity-Log"]
-        },
-        {
-          "name": "move",
-          "arguments": [
-            "NX-Activity-Log.nro",
-            "switch/NX-Activity-Log/NX-Activity-Log.nro"
-          ]
+          "name": "extract",
+          "arguments": [".*NX-Activity-Log.*\\.zip"]
         }
       ]
     },

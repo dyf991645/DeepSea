@@ -10,6 +10,7 @@ if __name__ == '__main__':
 
   parser = argparse.ArgumentParser(description="Team Neptune's DeepSea build script.")
   parser.add_argument('-u', '--update', action='store_true', help='Github Token', required=False)
+  parser.add_argument('-a', '--archive', action='store_true', help='Create Zip File', required=False)
   args = parser.parse_args()
   
   load_dotenv()
@@ -50,5 +51,6 @@ if __name__ == '__main__':
         sdcard.finishModule()
       
       logging.info(f"[{package['name']}] All modules processed.")
-      logging.info(f"[{package['name']}] Creating ZIP")
-      shutil.make_archive(f"deepsea-{package['name']}_v{settings['releaseVersion']}", 'zip', "./sd")
+      if args.archive:
+        logging.info(f"[{package['name']}] Creating ZIP")
+        shutil.make_archive(f"deepsea-{package['name']}_v{settings['releaseVersion']}", 'zip', "./sd")
