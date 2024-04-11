@@ -1,4 +1,4 @@
-import os, sys, shutil, logging, re, urllib.request, pathlib, json
+import os, sys, shutil, logging, re, urllib.request, pathlib, json, requests
 from github import Github
 
 class GH():
@@ -26,10 +26,9 @@ class GH():
                 return True
             
             logging.info(f"[{module['key']}] Downloading: {module['link']}")
-            req = urllib.request.Request(module['link'], headers={'User-Agent': 'Mozilla/5.0'})
-            response = urllib.request.urlopen(req)
+            response = requests.get(module['link'])
             with open(fpath+f"{module['filename']}", 'wb') as f:
-                f.write(response.read())
+                f.write(response.content)
             return True
         try:
             ghRepo = self.github.get_repo(module["repo"])

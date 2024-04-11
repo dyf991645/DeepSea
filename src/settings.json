@@ -56,7 +56,7 @@
     "moduleList": {
         "asset-amiibos": {
             "repo": "amiibo",
-            "link": "https://www.amiiboapi.com/api/amiibo",
+            "link": " https://amiiboapi.com/api/amiibo",
             "filename": "amiibo.json",
             "steps": [
                 {
