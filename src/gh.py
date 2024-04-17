@@ -12,7 +12,11 @@ class GH():
         fpath = f"./base/{module['repo']}/"
         update=self.updateAll
         
-        existed = os.path.isdir(fpath)
+        existed = False
+        if os.path.isdir(fpath):
+            for _, _, files in os.walk(fpath):
+                if files:
+                    existed = True
         
         if 'local' in module and module['local']:
             shutil.copytree(f"./asset/{module['repo']}", f"./base/{module['repo']}", dirs_exist_ok=True)
