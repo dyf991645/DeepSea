@@ -50,7 +50,7 @@ class GH():
         
         existedTag = module['tag']
         
-        if not update and latestTag != existedTag:
+        if not existed and not update and latestTag != existedTag:
             print(module['key']+":\n")
             needUpdate = input(f"update {module['repo']} from <{existedTag}> to <{latestTag}>?")
             if needUpdate == '':
