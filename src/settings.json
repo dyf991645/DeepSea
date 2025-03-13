@@ -49,7 +49,8 @@
             "modules": [
                 "hb-ldn_mitm",
                 "hb-nx-themes-installer",
-                "hb-salty-nx-tool"
+                "hb-salty-nx-tool",
+                "boot-lockpick_rcm"
             ]
         }
     ],
@@ -239,6 +240,29 @@
             ],
             "key": "boot-tegraexplorer",
             "tag": "4.2.0"
+        },
+        "boot-lockpick_rcm": {
+            "repo": "HamletDuFromage/aio-switch-updater",
+            "regex": [
+                ".*\\.bin"
+            ],
+            "steps": [
+                {
+                    "name": "create_dir",
+                    "arguments": [
+                        "bootloader/payloads"
+                    ]
+                },
+                {
+                    "name": "move",
+                    "arguments": [
+                        "Lockpick_RCM.bin",
+                        "bootloader/payloads/Lockpick_RCM.bin"
+                    ]
+                }
+            ],
+            "key": "boot-lockpick_rcm",
+            "tag": ""
         },
         "hb-aioupdater": {
             "repo": "HamletDuFromage/aio-switch-updater",
@@ -490,18 +514,25 @@
         "hb-nx-activity-log": {
             "repo": "zdm65477730/NX-Activity-Log",
             "regex": [
-                ".*NX-Activity-Log.*\\.zip"
+                "NX-Activity-Log.nro"
             ],
             "steps": [
                 {
-                    "name": "extract",
+                    "name": "create_dir",
                     "arguments": [
-                        ".*NX-Activity-Log.*\\.zip"
+                        "switch/NX-Activity-Log"
+                    ]
+                },
+                {
+                    "name": "move",
+                    "arguments": [
+                        "NX-Activity-Log.nro",
+                        "switch/NX-Activity-Log/NX-Activity-Log.nro"
                     ]
                 }
             ],
             "key": "hb-nx-activity-log",
-            "tag": "1.5.0"
+            "tag": "v1.5.4"
         },
         "hb-nx-themes-installer": {
             "repo": "exelix11/SwitchThemeInjector",
@@ -599,7 +630,7 @@
                 }
             ],
             "key": "hb-simple-mod-downloader",
-            "tag": "2.0.0"
+            "tag": "2.1.0"
         },
         "hb-simple-mod-manager": {
             "repo": "nadrino/SimpleModManager",
@@ -645,7 +676,7 @@
                 }
             ],
             "key": "hb-switch-time",
-            "tag": "0.1.1"
+            "tag": "0.1.5"
         },
         "hb-sysclk": {
             "repo": "retronx-team/sys-clk",
@@ -693,12 +724,12 @@
                 }
             ],
             "key": "hb-sysclk",
-            "tag": "2.0.0-rc"
+            "tag": "2.0.1"
         },
         "hb-tinfoil": {
             "repo": "tinfoil",
             "regex": [],
-            "link": "https://tinfoil.media/repo/Tinfoil%20Self%20Installer%20%5B050000BADDAD0000%5D%5B17.0%5D%5Bv3%5D.zip",
+            "link": "https://tinfoil.media/repo/Tinfoil%20Self%20Installer%20%5B050000BADDAD0000%5D%5B19.0%5D%5Bv1%5D.zip",
             "filename": "tinfoil.zip",
             "steps": [
                 {
@@ -732,7 +763,7 @@
                 }
             ],
             "key": "ovl-edizon",
-            "tag": "v1.0.7"
+            "tag": "v1.0.9"
         },
         "ovl-quickntp": {
             "repo": "cynagenautes/QuickNTP",
@@ -781,7 +812,7 @@
                 }
             ],
             "key": "ovl-reversenx-rt",
-            "tag": "2.0.0"
+            "tag": "2.1.0"
         },
         "ovl-status-monitor-overlay": {
             "repo": "masagrator/Status-Monitor-Overlay",
@@ -797,7 +828,7 @@
                 }
             ],
             "key": "ovl-status-monitor-overlay",
-            "tag": "1.0.3a"
+            "tag": "1.1.7a"
         },
         "ovl-sysmodules": {
             "repo": "WerWolv/ovl-sysmodules",
@@ -871,7 +902,7 @@
                 }
             ],
             "key": "sysmodule-missioncontrol",
-            "tag": "v0.11.0"
+            "tag": "v0.12.0"
         },
         "sysmodule-nxovlloader": {
             "repo": "WerWolv/nx-ovlloader",
@@ -903,7 +934,7 @@
                 }
             ],
             "key": "sysmodule-salty-nx",
-            "tag": "0.7.3"
+            "tag": "1.2.0"
         },
         "sysmodule-syscon": {
             "repo": "cathery/sys-con",
@@ -925,18 +956,18 @@
                 }
             ],
             "key": "sysmodule-syscon",
-            "tag": "v0.6.4"
+            "tag": "v0.6.5"
         },
         "sysmodule-sysftpdlight": {
             "repo": "cathery/sys-ftpd",
             "regex": [
-                ".*sys-ftpd-light.*\\.zip"
+                ".*sys-ftpd.*\\.zip"
             ],
             "steps": [
                 {
                     "name": "extract",
                     "arguments": [
-                        ".*sys-ftpd-light.*\\.zip"
+                        ".*sys-ftpd.*\\.zip"
                     ]
                 },
                 {
@@ -963,7 +994,7 @@
                 }
             ],
             "key": "sysmodule-sysftpdlight",
-            "tag": "1.0.4"
+            "tag": "1.0.5"
         },
         "sysmodule-sys-patch": {
             "repo": "sys-patch",
