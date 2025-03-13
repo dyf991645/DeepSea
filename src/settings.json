@@ -1,787 +1,985 @@
 {
-  "releaseVersion": "20240411",
-  "packages": [
-    {
-      "name": "standard",
-      "active": true,
-      "modules": [
-        "asset-amiibos",
-        "base-atmosphere",
-        "base-deepseaassets",
-        "base-hekate",
-        "base-static",
-        "base-sig-patches",
-        "boot-deepseacpr",
-        "boot-tegraexplorer",
-        "boot-lockpick_rcm",
-        "hb-aioupdater",
-        "hb-amiibo-generator",
-        "hb-dbi",
-        "hb-deepseatoolbox",
-        "hb-edizon",
-        "hb-emuiibo",
-        "hb-goldleaf",
-        "hb-hbappstore",
-        "hb-jksv",
-        "hb-nx-activity-log",
-        "hb-nxshell",
-        "hb-simple-mod-downloader",
-        "hb-simple-mod-manager",
-        "hb-switch-time",
-        "hb-sysclk",
-        "hb-tinfoil",
-        "ovl-edizon",
-        "ovl-quickntp",
-        "ovl-reversenx-rt",
-        "ovl-status-monitor-overlay",
-        "ovl-sysmodules",
-        "ovl-teslamenu",
-        "sysmodule-missioncontrol",
-        "sysmodule-nxovlloader",
-        "sysmodule-salty-nx",
-        "sysmodule-syscon",
-        "sysmodule-sysftpdlight",
-        "sysmodule-sys-patch"
-      ]
-    },
-    {
-      "name": "addition",
-      "active": false,
-      "modules": ["hb-ldn_mitm", "hb-nx-themes-installer", "hb-salty-nx-tool"]
+    "releaseVersion": "20240411",
+    "packages": [
+        {
+            "name": "standard",
+            "active": true,
+            "modules": [
+                "asset-amiibos",
+                "base-atmosphere",
+                "base-deepseaassets",
+                "base-hekate",
+                "base-static",
+                "base-sig-patches",
+                "boot-deepseacpr",
+                "boot-tegraexplorer",
+                "hb-aioupdater",
+                "hb-amiibo-generator",
+                "hb-dbi",
+                "hb-deepseatoolbox",
+                "hb-edizon",
+                "hb-emuiibo",
+                "hb-goldleaf",
+                "hb-hbappstore",
+                "hb-jksv",
+                "hb-nx-activity-log",
+                "hb-nxshell",
+                "hb-simple-mod-downloader",
+                "hb-simple-mod-manager",
+                "hb-switch-time",
+                "hb-sysclk",
+                "hb-tinfoil",
+                "ovl-edizon",
+                "ovl-quickntp",
+                "ovl-reversenx-rt",
+                "ovl-status-monitor-overlay",
+                "ovl-sysmodules",
+                "ovl-teslamenu",
+                "sysmodule-missioncontrol",
+                "sysmodule-nxovlloader",
+                "sysmodule-salty-nx",
+                "sysmodule-syscon",
+                "sysmodule-sysftpdlight",
+                "sysmodule-sys-patch"
+            ]
+        },
+        {
+            "name": "addition",
+            "active": false,
+            "modules": [
+                "hb-ldn_mitm",
+                "hb-nx-themes-installer",
+                "hb-salty-nx-tool"
+            ]
+        }
+    ],
+    "moduleList": {
+        "asset-amiibos": {
+            "repo": "amiibo",
+            "link": " https://amiiboapi.com/api/amiibo",
+            "filename": "amiibo.json",
+            "steps": [
+                {
+                    "name": "create_dir",
+                    "arguments": [
+                        "emuiibo"
+                    ]
+                },
+                {
+                    "name": "move",
+                    "arguments": [
+                        "amiibos.json",
+                        "emuiibo/amiibos.json"
+                    ]
+                }
+            ],
+            "key": "asset-amiibos",
+            "tag": ""
+        },
+        "base-atmosphere": {
+            "repo": "Atmosphere-NX/Atmosphere",
+            "regex": [
+                ".*atmosphere.*\\.zip"
+            ],
+            "steps": [
+                {
+                    "name": "extract",
+                    "arguments": [
+                        ".*atmosphere.*\\.zip"
+                    ]
+                },
+                {
+                    "name": "delete",
+                    "arguments": [
+                        "switch/reboot_to_payload.nro"
+                    ]
+                },
+                {
+                    "name": "create_dir",
+                    "arguments": [
+                        "atmosphere/contents"
+                    ]
+                },
+                {
+                    "name": "copy",
+                    "arguments": [
+                        "atmosphere/config_templates/system_settings.ini",
+                        "atmosphere/config/system_settings.ini"
+                    ]
+                },
+                {
+                    "name": "replace_content",
+                    "arguments": [
+                        "atmosphere/config/system_settings.ini",
+                        "; dmnt_cheats_enabled_by_default = u8!0x1",
+                        "dmnt_cheats_enabled_by_default = u8!0x0"
+                    ]
+                }
+            ],
+            "key": "base-atmosphere",
+            "tag": "1.8.0-prerelease"
+        },
+        "base-deepseaassets": {
+            "repo": "Team-Neptune/DeepSea-Assets",
+            "regex": [
+                ".*DeepSea-Assets.*\\.zip"
+            ],
+            "steps": [
+                {
+                    "name": "extract",
+                    "arguments": [
+                        ".*DeepSea-Assets.*\\.zip"
+                    ]
+                }
+            ],
+            "key": "base-deepseaassets",
+            "tag": "1.0.10"
+        },
+        "base-hekate": {
+            "repo": "CTCaer/hekate",
+            "regex": [
+                ".*hekate.*\\.zip"
+            ],
+            "steps": [
+                {
+                    "name": "extract",
+                    "arguments": [
+                        ".*hekate.*\\.zip"
+                    ]
+                },
+                {
+                    "name": "copy",
+                    "arguments": [
+                        "bootloader/hekate_*",
+                        "bootloader/update.bin"
+                    ]
+                },
+                {
+                    "name": "create_dir",
+                    "arguments": [
+                        "atmosphere"
+                    ]
+                },
+                {
+                    "name": "copy",
+                    "arguments": [
+                        "bootloader/hekate_*",
+                        "atmosphere/reboot_payload.bin"
+                    ]
+                }
+            ],
+            "key": "base-hekate",
+            "tag": "v6.2.2"
+        },
+        "base-static": {
+            "repo": "static",
+            "local": true,
+            "steps": [],
+            "key": "base-static",
+            "tag": ""
+        },
+        "base-sig-patches": {
+            "repo": "sig-patches",
+            "regex": [],
+            "link": "https://sigmapatches.su/sigpatches.zip",
+            "filename": "sig-patches.zip",
+            "steps": [
+                {
+                    "name": "extract",
+                    "arguments": [
+                        "sig-patches.zip"
+                    ]
+                }
+            ],
+            "key": "base-sig-patches",
+            "tag": ""
+        },
+        "boot-deepseacpr": {
+            "repo": "Team-Neptune/CommonProblemResolver",
+            "regex": [
+                ".*\\.bin"
+            ],
+            "steps": [
+                {
+                    "name": "create_dir",
+                    "arguments": [
+                        "bootloader/payloads"
+                    ]
+                },
+                {
+                    "name": "move",
+                    "arguments": [
+                        "CommonProblemResolver.bin",
+                        "bootloader/payloads/CommonProblemResolver.bin"
+                    ]
+                }
+            ],
+            "key": "boot-deepseacpr",
+            "tag": "v0.3.5"
+        },
+        "boot-tegraexplorer": {
+            "repo": "suchmememanyskill/TegraExplorer",
+            "regex": [
+                ".*\\.bin"
+            ],
+            "steps": [
+                {
+                    "name": "create_dir",
+                    "arguments": [
+                        "bootloader/payloads"
+                    ]
+                },
+                {
+                    "name": "move",
+                    "arguments": [
+                        "TegraExplorer.bin",
+                        "bootloader/payloads/TegraExplorer.bin"
+                    ]
+                }
+            ],
+            "key": "boot-tegraexplorer",
+            "tag": "4.2.0"
+        },
+        "hb-aioupdater": {
+            "repo": "HamletDuFromage/aio-switch-updater",
+            "regex": [
+                ".*aio-switch-updater.*\\.zip"
+            ],
+            "steps": [
+                {
+                    "name": "extract",
+                    "arguments": [
+                        ".*aio-switch-updater.*\\.zip"
+                    ]
+                }
+            ],
+            "key": "hb-aioupdater",
+            "tag": "2.23.2"
+        },
+        "hb-amiibo-generator": {
+            "repo": "Slluxx/AmiiboGenerator",
+            "regex": [
+                ".*AmiiboGenerator.*\\.nro"
+            ],
+            "steps": [
+                {
+                    "name": "create_dir",
+                    "arguments": [
+                        "switch/AmiiboGenerator"
+                    ]
+                },
+                {
+                    "name": "move",
+                    "arguments": [
+                        "AmiiboGenerator.nro",
+                        "switch/AmiiboGenerator/AmiiboGenerator.nro"
+                    ]
+                }
+            ],
+            "key": "hb-amiibo-generator",
+            "tag": "v2.1.1"
+        },
+        "hb-dbi": {
+            "repo": "rashevskyv/dbi",
+            "regex": [
+                ".*DBI.nro"
+            ],
+            "steps": [
+                {
+                    "name": "create_dir",
+                    "arguments": [
+                        "switch/DBI"
+                    ]
+                },
+                {
+                    "name": "move",
+                    "arguments": [
+                        "DBI.nro",
+                        "switch/DBI/DBI.nro"
+                    ]
+                }
+            ],
+            "key": "hb-dbi",
+            "tag": "658"
+        },
+        "hb-deepseatoolbox": {
+            "repo": "Team-Neptune/DeepSea-Toolbox",
+            "regex": [
+                ".*\\.nro"
+            ],
+            "steps": [
+                {
+                    "name": "create_dir",
+                    "arguments": [
+                        "switch/DeepSea-Toolbox"
+                    ]
+                },
+                {
+                    "name": "move",
+                    "arguments": [
+                        "DeepSeaToolbox.nro",
+                        "switch/DeepSea-Toolbox/DeepSeaToolbox.nro"
+                    ]
+                }
+            ],
+            "key": "hb-deepseatoolbox",
+            "tag": "v4.04"
+        },
+        "hb-edizon": {
+            "repo": "tomvita/EdiZon-SE",
+            "regex": [
+                ".*EdiZon.*\\.zip"
+            ],
+            "steps": [
+                {
+                    "name": "extract",
+                    "arguments": [
+                        ".*EdiZon.*\\.zip"
+                    ]
+                },
+                {
+                    "name": "delete",
+                    "arguments": [
+                        "switch/breeze"
+                    ]
+                }
+            ],
+            "key": "hb-edizon",
+            "tag": "3.8.37"
+        },
+        "hb-emuiibo": {
+            "repo": "XorTroll/emuiibo",
+            "regex": [
+                ".*emuiibo.*\\.zip"
+            ],
+            "steps": [
+                {
+                    "name": "extract",
+                    "arguments": [
+                        ".*emuiibo.*\\.zip"
+                    ]
+                },
+                {
+                    "name": "delete",
+                    "arguments": [
+                        "SdOut/atmosphere/contents/0100000000000352/flags/boot2.flag"
+                    ]
+                },
+                {
+                    "name": "move",
+                    "arguments": [
+                        "SdOut/atmosphere",
+                        "atmosphere"
+                    ]
+                },
+                {
+                    "name": "move",
+                    "arguments": [
+                        "SdOut/emuiibo",
+                        "emuiibo"
+                    ]
+                },
+                {
+                    "name": "move",
+                    "arguments": [
+                        "SdOut/switch",
+                        "switch"
+                    ]
+                },
+                {
+                    "name": "delete",
+                    "arguments": [
+                        "SdOut"
+                    ]
+                }
+            ],
+            "key": "hb-emuiibo",
+            "tag": "1.1.1"
+        },
+        "hb-goldleaf": {
+            "repo": "XorTroll/Goldleaf",
+            "regex": [
+                "Goldleaf.nro"
+            ],
+            "steps": [
+                {
+                    "name": "create_dir",
+                    "arguments": [
+                        "switch/Goldleaf"
+                    ]
+                },
+                {
+                    "name": "move",
+                    "arguments": [
+                        "Goldleaf.nro",
+                        "switch/Goldleaf/Goldleaf.nro"
+                    ]
+                }
+            ],
+            "key": "hb-goldleaf",
+            "tag": "1.0.0"
+        },
+        "hb-hbappstore": {
+            "repo": "fortheusers/hb-appstore",
+            "regex": [
+                ".*switch-extracttosd.*\\.zip"
+            ],
+            "steps": [
+                {
+                    "name": "extract",
+                    "arguments": [
+                        ".*switch-extracttosd.*\\.zip"
+                    ]
+                }
+            ],
+            "key": "hb-hbappstore",
+            "tag": "v2.3.2"
+        },
+        "hb-jksv": {
+            "repo": "J-D-K/JKSV",
+            "regex": [
+                ".*\\.nro"
+            ],
+            "steps": [
+                {
+                    "name": "create_dir",
+                    "arguments": [
+                        "switch/jksv"
+                    ]
+                },
+                {
+                    "name": "move",
+                    "arguments": [
+                        "JKSV.nro",
+                        "switch/jksv"
+                    ]
+                }
+            ],
+            "key": "hb-jksv",
+            "tag": "02/23/2023"
+        },
+        "hb-ldn_mitm": {
+            "repo": "spacemeowx2/ldn_mitm",
+            "regex": [
+                ".*ldn_mitm.*\\.zip"
+            ],
+            "steps": [
+                {
+                    "name": "extract",
+                    "arguments": [
+                        ".*ldn_mitm.*\\.zip"
+                    ]
+                },
+                {
+                    "name": "delete",
+                    "arguments": [
+                        "atmosphere/contents/4200000000000010/flags/boot2.flag"
+                    ]
+                },
+                {
+                    "name": "create_file",
+                    "arguments": [
+                        "atmosphere/contents/4200000000000010/toolbox.json",
+                        "{\"name\": \"ldn_mitm\",\"tid\": \"4200000000000010\",\"requires_reboot\": true}"
+                    ]
+                }
+            ],
+            "key": "hb-ldn_mitm",
+            "tag": ""
+        },
+        "hb-nx-activity-log": {
+            "repo": "zdm65477730/NX-Activity-Log",
+            "regex": [
+                ".*NX-Activity-Log.*\\.zip"
+            ],
+            "steps": [
+                {
+                    "name": "extract",
+                    "arguments": [
+                        ".*NX-Activity-Log.*\\.zip"
+                    ]
+                }
+            ],
+            "key": "hb-nx-activity-log",
+            "tag": "1.5.0"
+        },
+        "hb-nx-themes-installer": {
+            "repo": "exelix11/SwitchThemeInjector",
+            "regex": [
+                ".*NXThemesInstaller.*\\.nro"
+            ],
+            "steps": [
+                {
+                    "name": "create_dir",
+                    "arguments": [
+                        "switch/NXThemesInstaller"
+                    ]
+                },
+                {
+                    "name": "move",
+                    "arguments": [
+                        "NXThemesInstaller.nro",
+                        "switch/NXThemesInstaller/NXThemesInstaller.nro"
+                    ]
+                }
+            ],
+            "key": "hb-nx-themes-installer",
+            "tag": ""
+        },
+        "hb-nxshell": {
+            "repo": "joel16/NX-Shell",
+            "regex": [
+                ".*NX-Shell.*\\.nro"
+            ],
+            "steps": [
+                {
+                    "name": "create_dir",
+                    "arguments": [
+                        "switch/NX-Shell"
+                    ]
+                },
+                {
+                    "name": "move",
+                    "arguments": [
+                        "NX-Shell.nro",
+                        "switch/NX-Shell/NX-Shell.nro"
+                    ]
+                }
+            ],
+            "key": "hb-nxshell",
+            "tag": "4.01"
+        },
+        "hb-salty-nx-tool": {
+            "repo": "masagrator/SaltyNX-Tool",
+            "regex": [
+                ".*SaltyNX-Tool.*\\.zip"
+            ],
+            "steps": [
+                {
+                    "name": "extract",
+                    "arguments": [
+                        ".*SaltyNX-Tool.*\\.zip"
+                    ]
+                },
+                {
+                    "name": "create_dir",
+                    "arguments": [
+                        "switch/SaltyNX-Tool"
+                    ]
+                },
+                {
+                    "name": "move",
+                    "arguments": [
+                        "SaltyNX-Tool.nro",
+                        "switch/SaltyNX-Tool/SaltyNX-Tool.nro"
+                    ]
+                }
+            ],
+            "key": "hb-salty-nx-tool",
+            "tag": ""
+        },
+        "hb-simple-mod-downloader": {
+            "repo": "PoloNX/SimpleModDownloader",
+            "regex": [
+                ".*SimpleModDownloader.*\\.nro"
+            ],
+            "steps": [
+                {
+                    "name": "create_dir",
+                    "arguments": [
+                        "switch/SimpleModDownloader"
+                    ]
+                },
+                {
+                    "name": "move",
+                    "arguments": [
+                        "SimpleModDownloader.nro",
+                        "switch/SimpleModDownloader/SimpleModDownloader.nro"
+                    ]
+                }
+            ],
+            "key": "hb-simple-mod-downloader",
+            "tag": "2.0.0"
+        },
+        "hb-simple-mod-manager": {
+            "repo": "nadrino/SimpleModManager",
+            "regex": [
+                ".*SimpleModManager.nro"
+            ],
+            "steps": [
+                {
+                    "name": "create_dir",
+                    "arguments": [
+                        "switch/SimpleModManager"
+                    ]
+                },
+                {
+                    "name": "move",
+                    "arguments": [
+                        "SimpleModManager.nro",
+                        "switch/SimpleModManager/SimpleModManager.nro"
+                    ]
+                }
+            ],
+            "key": "hb-simple-mod-manager",
+            "tag": "2.1.2"
+        },
+        "hb-switch-time": {
+            "repo": "3096/switch-time",
+            "regex": [
+                ".*switch-time.*\\.nro"
+            ],
+            "steps": [
+                {
+                    "name": "create_dir",
+                    "arguments": [
+                        "switch/switch-time"
+                    ]
+                },
+                {
+                    "name": "move",
+                    "arguments": [
+                        "switch-time.nro",
+                        "switch/switch-time/switch-time.nro"
+                    ]
+                }
+            ],
+            "key": "hb-switch-time",
+            "tag": "0.1.1"
+        },
+        "hb-sysclk": {
+            "repo": "retronx-team/sys-clk",
+            "regex": [
+                ".*sys-clk.*\\.zip"
+            ],
+            "steps": [
+                {
+                    "name": "extract",
+                    "arguments": [
+                        ".*sys-clk.*\\.zip"
+                    ]
+                },
+                {
+                    "name": "create_dir",
+                    "arguments": [
+                        "switch/sys-clk-manager"
+                    ]
+                },
+                {
+                    "name": "move",
+                    "arguments": [
+                        "switch/sys-clk-manager.nro",
+                        "switch/sys-clk-manager/sys-clk-manager.nro"
+                    ]
+                },
+                {
+                    "name": "delete",
+                    "arguments": [
+                        "README.md"
+                    ]
+                },
+                {
+                    "name": "delete",
+                    "arguments": [
+                        "atmosphere/contents/00FF0000636C6BFF/flags/boot2.flag"
+                    ]
+                },
+                {
+                    "name": "create_file",
+                    "arguments": [
+                        "atmosphere/contents/00FF0000636C6BFF/toolbox.json",
+                        "{\"name\": \"sys-clk\",\"tid\": \"00FF0000636C6BFF\",\"requires_reboot\": true}"
+                    ]
+                }
+            ],
+            "key": "hb-sysclk",
+            "tag": "2.0.0-rc"
+        },
+        "hb-tinfoil": {
+            "repo": "tinfoil",
+            "regex": [],
+            "link": "https://tinfoil.media/repo/Tinfoil%20Self%20Installer%20%5B050000BADDAD0000%5D%5B17.0%5D%5Bv3%5D.zip",
+            "filename": "tinfoil.zip",
+            "steps": [
+                {
+                    "name": "extract",
+                    "arguments": [
+                        "tinfoil.zip"
+                    ]
+                },
+                {
+                    "name": "create_file",
+                    "arguments": [
+                        "switch/tinfoil/locations.conf",
+                        "[\"usb:/\",\"usbfs:/\",\"sdmc:/\",\"sdmc:/roms/\",\"system:/\",\"user:/\",\"safe:/\",{\"url\":\"https://e.cchi.me/\",\"title\":\"Ecchi Save Project\",\"enabled\":0},{\"url\":\"https://tiny.cc/eeveesaveproject\",\"title\":\"Eevee Save Project\",\"enabled\":1},{\"url\":\"https://liberashop.rs/roms\",\"title\":\"LiberaShop Retro ROMs\",\"enabled\":1},{\"url\":\"https://liberashop.rs/\",\"title\":\"LiberaCDN\",\"enabled\":1}]"
+                    ]
+                }
+            ],
+            "key": "hb-tinfoil",
+            "tag": ""
+        },
+        "ovl-edizon": {
+            "repo": "proferabg/EdiZon-Overlay",
+            "regex": [
+                ".*EdiZon-Overlay.*\\.zip"
+            ],
+            "steps": [
+                {
+                    "name": "extract",
+                    "arguments": [
+                        ".*EdiZon-Overlay.*\\.zip"
+                    ]
+                }
+            ],
+            "key": "ovl-edizon",
+            "tag": "v1.0.7"
+        },
+        "ovl-quickntp": {
+            "repo": "cynagenautes/QuickNTP",
+            "regex": [
+                ".*QuickNTP.*\\.ovl"
+            ],
+            "steps": [
+                {
+                    "name": "create_dir",
+                    "arguments": [
+                        "switch/.overlays"
+                    ]
+                },
+                {
+                    "name": "move",
+                    "arguments": [
+                        "QuickNTP.ovl",
+                        "switch/.overlays/QuickNTP.ovl"
+                    ]
+                }
+            ],
+            "key": "ovl-quickntp",
+            "tag": "1.2.8"
+        },
+        "ovl-reversenx-rt": {
+            "repo": "masagrator/ReverseNX-RT",
+            "regex": [
+                ".*ReverseNX-RT.*\\.ovl"
+            ],
+            "dependence": [
+                "sysmodule-salty-nx"
+            ],
+            "steps": [
+                {
+                    "name": "create_dir",
+                    "arguments": [
+                        "switch/.overlays"
+                    ]
+                },
+                {
+                    "name": "move",
+                    "arguments": [
+                        "ReverseNX-RT-ovl.ovl",
+                        "switch/.overlays/ReverseNX-RT.ovl"
+                    ]
+                }
+            ],
+            "key": "ovl-reversenx-rt",
+            "tag": "2.0.0"
+        },
+        "ovl-status-monitor-overlay": {
+            "repo": "masagrator/Status-Monitor-Overlay",
+            "regex": [
+                ".*Status-Monitor-Overlay.*\\.zip"
+            ],
+            "steps": [
+                {
+                    "name": "extract",
+                    "arguments": [
+                        ".*Status-Monitor-Overlay.*\\.zip"
+                    ]
+                }
+            ],
+            "key": "ovl-status-monitor-overlay",
+            "tag": "1.0.3a"
+        },
+        "ovl-sysmodules": {
+            "repo": "WerWolv/ovl-sysmodules",
+            "regex": [
+                ".*ovlSysmodules.*\\.ovl"
+            ],
+            "steps": [
+                {
+                    "name": "create_dir",
+                    "arguments": [
+                        "switch/.overlays"
+                    ]
+                },
+                {
+                    "name": "move",
+                    "arguments": [
+                        "ovlSysmodules.ovl",
+                        "switch/.overlays/ovlSysmodules.ovl"
+                    ]
+                }
+            ],
+            "key": "ovl-sysmodules",
+            "tag": "v1.3.1"
+        },
+        "ovl-teslamenu": {
+            "repo": "hax4dazy/Tesla-Menu",
+            "regex": [
+                ".*ovlmenu.*\\.zip"
+            ],
+            "steps": [
+                {
+                    "name": "extract",
+                    "arguments": [
+                        ".*ovlmenu.*\\.zip"
+                    ]
+                },
+                {
+                    "name": "create_dir",
+                    "arguments": [
+                        "config/tesla"
+                    ]
+                },
+                {
+                    "name": "create_file",
+                    "arguments": [
+                        "config/tesla/config.ini",
+                        "[tesla]\nkey_combo = ZL+ZR+DDOWN"
+                    ]
+                }
+            ],
+            "key": "ovl-teslamenu",
+            "tag": "v1.2.2"
+        },
+        "sysmodule-missioncontrol": {
+            "repo": "ndeadly/MissionControl",
+            "regex": [
+                ".*MissionControl.*\\.zip"
+            ],
+            "steps": [
+                {
+                    "name": "extract",
+                    "arguments": [
+                        ".*MissionControl.*\\.zip"
+                    ]
+                },
+                {
+                    "name": "delete",
+                    "arguments": [
+                        "atmosphere/contents/010000000000bd00/flags/boot2.flag"
+                    ]
+                }
+            ],
+            "key": "sysmodule-missioncontrol",
+            "tag": "v0.11.0"
+        },
+        "sysmodule-nxovlloader": {
+            "repo": "WerWolv/nx-ovlloader",
+            "regex": [
+                ".*nx-ovlloader.*\\.zip"
+            ],
+            "steps": [
+                {
+                    "name": "extract",
+                    "arguments": [
+                        ".*nx-ovlloader.*\\.zip"
+                    ]
+                }
+            ],
+            "key": "sysmodule-nxovlloader",
+            "tag": "v1.0.7"
+        },
+        "sysmodule-salty-nx": {
+            "repo": "masagrator/SaltyNX",
+            "regex": [
+                ".*SaltyNX.*\\.zip"
+            ],
+            "steps": [
+                {
+                    "name": "extract",
+                    "arguments": [
+                        ".*SaltyNX.*\\.zip"
+                    ]
+                }
+            ],
+            "key": "sysmodule-salty-nx",
+            "tag": "0.7.3"
+        },
+        "sysmodule-syscon": {
+            "repo": "cathery/sys-con",
+            "regex": [
+                ".*sys-con.*\\.zip"
+            ],
+            "steps": [
+                {
+                    "name": "extract",
+                    "arguments": [
+                        ".*sys-con.*\\.zip"
+                    ]
+                },
+                {
+                    "name": "delete",
+                    "arguments": [
+                        "atmosphere/contents/690000000000000D/flags/boot2.flag"
+                    ]
+                }
+            ],
+            "key": "sysmodule-syscon",
+            "tag": "v0.6.4"
+        },
+        "sysmodule-sysftpdlight": {
+            "repo": "cathery/sys-ftpd",
+            "regex": [
+                ".*sys-ftpd-light.*\\.zip"
+            ],
+            "steps": [
+                {
+                    "name": "extract",
+                    "arguments": [
+                        ".*sys-ftpd-light.*\\.zip"
+                    ]
+                },
+                {
+                    "name": "delete",
+                    "arguments": [
+                        "atmosphere/contents/420000000000000E/flags/boot2.flag"
+                    ]
+                },
+                {
+                    "name": "replace_content",
+                    "arguments": [
+                        "config/sys-ftpd/config.ini",
+                        "user:=",
+                        "user:=deepsea"
+                    ]
+                },
+                {
+                    "name": "replace_content",
+                    "arguments": [
+                        "config/sys-ftpd/config.ini",
+                        "password:=",
+                        "password:=secretpass"
+                    ]
+                }
+            ],
+            "key": "sysmodule-sysftpdlight",
+            "tag": "1.0.4"
+        },
+        "sysmodule-sys-patch": {
+            "repo": "sys-patch",
+            "regex": [],
+            "link": "https://sigmapatches.su/sys-patch.zip",
+            "filename": "sys-patch.zip",
+            "steps": [
+                {
+                    "name": "extract",
+                    "arguments": [
+                        "sys-patch.zip"
+                    ]
+                }
+            ],
+            "key": "sysmodule-sys-patch",
+            "tag": ""
+        }
     }
-  ],
-  "moduleList": {
-    "asset-amiibos": {
-      "repo": "amiibo",
-      "link": " https://amiiboapi.com/api/amiibo",
-      "filename": "amiibo.json",
-      "steps": [
-        {
-          "name": "create_dir",
-          "arguments": ["emuiibo"]
-        },
-        {
-          "name": "move",
-          "arguments": ["amiibos.json", "emuiibo/amiibos.json"]
-        }
-      ],
-      "key": "asset-amiibos",
-      "tag": ""
-    },
-    "base-atmosphere": {
-      "repo": "Atmosphere-NX/Atmosphere",
-      "regex": [".*atmosphere.*\\.zip"],
-      "steps": [
-        {
-          "name": "extract",
-          "arguments": [".*atmosphere.*\\.zip"]
-        },
-        {
-          "name": "delete",
-          "arguments": ["switch/reboot_to_payload.nro"]
-        },
-        {
-          "name": "create_dir",
-          "arguments": ["atmosphere/contents"]
-        },
-        {
-          "name": "copy",
-          "arguments": [
-            "atmosphere/config_templates/system_settings.ini",
-            "atmosphere/config/system_settings.ini"
-          ]
-        },
-        {
-          "name": "replace_content",
-          "arguments": [
-            "atmosphere/config/system_settings.ini",
-            "; dmnt_cheats_enabled_by_default = u8!0x1",
-            "dmnt_cheats_enabled_by_default = u8!0x0"
-          ]
-        }
-      ],
-      "key": "base-atmosphere",
-      "tag": "1.7.0-prerelease"
-    },
-    "base-deepseaassets": {
-      "repo": "Team-Neptune/DeepSea-Assets",
-      "regex": [".*DeepSea-Assets.*\\.zip"],
-      "steps": [
-        {
-          "name": "extract",
-          "arguments": [".*DeepSea-Assets.*\\.zip"]
-        }
-      ],
-      "key": "base-deepseaassets",
-      "tag": "1.0.9"
-    },
-    "base-hekate": {
-      "repo": "CTCaer/hekate",
-      "regex": [".*hekate.*\\.zip"],
-      "steps": [
-        {
-          "name": "extract",
-          "arguments": [".*hekate.*\\.zip"]
-        },
-        {
-          "name": "copy",
-          "arguments": ["bootloader/hekate_*", "bootloader/update.bin"]
-        },
-        {
-          "name": "create_dir",
-          "arguments": ["atmosphere"]
-        },
-        {
-          "name": "copy",
-          "arguments": ["bootloader/hekate_*", "atmosphere/reboot_payload.bin"]
-        }
-      ],
-      "key": "base-hekate",
-      "tag": "v6.1.1"
-    },
-    "base-static": {
-      "repo": "static",
-      "local": true,
-      "steps": [],
-      "key": "base-static",
-      "tag": ""
-    },
-    "base-sig-patches": {
-      "repo": "sig-patches",
-      "regex": [],
-      "link": "https://sigmapatches.su/sigpatches.zip",
-      "filename": "sig-patches.zip",
-      "steps": [
-        {
-          "name": "extract",
-          "arguments": ["sig-patches.zip"]
-        }
-      ],
-      "key": "base-sig-patches",
-      "tag": ""
-    },
-    "boot-deepseacpr": {
-      "repo": "Team-Neptune/CommonProblemResolver",
-      "regex": [".*\\.bin"],
-      "steps": [
-        {
-          "name": "create_dir",
-          "arguments": ["bootloader/payloads"]
-        },
-        {
-          "name": "move",
-          "arguments": [
-            "CommonProblemResolver.bin",
-            "bootloader/payloads/CommonProblemResolver.bin"
-          ]
-        }
-      ],
-      "key": "boot-deepseacpr",
-      "tag": "v0.3.5"
-    },
-    "boot-tegraexplorer": {
-      "repo": "suchmememanyskill/TegraExplorer",
-      "regex": [".*\\.bin"],
-      "steps": [
-        {
-          "name": "create_dir",
-          "arguments": ["bootloader/payloads"]
-        },
-        {
-          "name": "move",
-          "arguments": [
-            "TegraExplorer.bin",
-            "bootloader/payloads/TegraExplorer.bin"
-          ]
-        }
-      ],
-      "key": "boot-tegraexplorer",
-      "tag": "4.1.1"
-    },
-    "boot-lockpick_rcm": {
-      "repo": "HamletDuFromage/aio-switch-updater",
-      "regex": [".*\\.bin"],
-      "steps": [
-        {
-          "name": "create_dir",
-          "arguments": ["bootloader/payloads"]
-        },
-        {
-          "name": "move",
-          "arguments": [
-            "Lockpick_RCM.bin",
-            "bootloader/payloads/Lockpick_RCM.bin"
-          ]
-        }
-      ],
-      "key": "boot-lockpick_rcm",
-      "tag": ""
-    },
-    "hb-aioupdater": {
-      "repo": "HamletDuFromage/aio-switch-updater",
-      "regex": [".*aio-switch-updater.*\\.zip"],
-      "steps": [
-        {
-          "name": "extract",
-          "arguments": [".*aio-switch-updater.*\\.zip"]
-        }
-      ],
-      "key": "hb-aioupdater",
-      "tag": "2.23.2"
-    },
-    "hb-amiibo-generator": {
-      "repo": "Slluxx/AmiiboGenerator",
-      "regex": [".*AmiiboGenerator.*\\.nro"],
-      "steps": [
-        {
-          "name": "create_dir",
-          "arguments": ["switch/AmiiboGenerator"]
-        },
-        {
-          "name": "move",
-          "arguments": [
-            "AmiiboGenerator.nro",
-            "switch/AmiiboGenerator/AmiiboGenerator.nro"
-          ]
-        }
-      ],
-      "key": "hb-amiibo-generator",
-      "tag": "v2.1.1"
-    },
-    "hb-dbi": {
-      "repo": "rashevskyv/dbi",
-      "regex": [".*DBI.nro"],
-      "steps": [
-        {
-          "name": "create_dir",
-          "arguments": ["switch/DBI"]
-        },
-        {
-          "name": "move",
-          "arguments": ["DBI.nro", "switch/DBI/DBI.nro"]
-        }
-      ],
-      "key": "hb-dbi",
-      "tag": "658"
-    },
-    "hb-deepseatoolbox": {
-      "repo": "Team-Neptune/DeepSea-Toolbox",
-      "regex": [".*\\.nro"],
-      "steps": [
-        {
-          "name": "create_dir",
-          "arguments": ["switch/DeepSea-Toolbox"]
-        },
-        {
-          "name": "move",
-          "arguments": [
-            "DeepSeaToolbox.nro",
-            "switch/DeepSea-Toolbox/DeepSeaToolbox.nro"
-          ]
-        }
-      ],
-      "key": "hb-deepseatoolbox",
-      "tag": "v4.04"
-    },
-    "hb-edizon": {
-      "repo": "tomvita/EdiZon-SE",
-      "regex": [".*EdiZon.*\\.zip"],
-      "steps": [
-        {
-          "name": "extract",
-          "arguments": [".*EdiZon.*\\.zip"]
-        },
-        {
-          "name": "delete",
-          "arguments": ["switch/breeze"]
-        }
-      ],
-      "key": "hb-edizon",
-      "tag": "3.8.37"
-    },
-    "hb-emuiibo": {
-      "repo": "XorTroll/emuiibo",
-      "regex": [".*emuiibo.*\\.zip"],
-      "steps": [
-        {
-          "name": "extract",
-          "arguments": [".*emuiibo.*\\.zip"]
-        },
-        {
-          "name": "delete",
-          "arguments": [
-            "SdOut/atmosphere/contents/0100000000000352/flags/boot2.flag"
-          ]
-        },
-        {
-          "name": "move",
-          "arguments": ["SdOut/atmosphere", "atmosphere"]
-        },
-        {
-          "name": "move",
-          "arguments": ["SdOut/emuiibo", "emuiibo"]
-        },
-        {
-          "name": "move",
-          "arguments": ["SdOut/switch", "switch"]
-        },
-        {
-          "name": "delete",
-          "arguments": ["SdOut"]
-        }
-      ],
-      "key": "hb-emuiibo",
-      "tag": "1.1.1"
-    },
-    "hb-goldleaf": {
-      "repo": "XorTroll/Goldleaf",
-      "regex": ["Goldleaf.nro"],
-      "steps": [
-        {
-          "name": "create_dir",
-          "arguments": ["switch/Goldleaf"]
-        },
-        {
-          "name": "move",
-          "arguments": ["Goldleaf.nro", "switch/Goldleaf/Goldleaf.nro"]
-        }
-      ],
-      "key": "hb-goldleaf",
-      "tag": "1.0.0"
-    },
-    "hb-hbappstore": {
-      "repo": "fortheusers/hb-appstore",
-      "regex": [".*switch-extracttosd.*\\.zip"],
-      "steps": [
-        {
-          "name": "extract",
-          "arguments": [".*switch-extracttosd.*\\.zip"]
-        }
-      ],
-      "key": "hb-hbappstore",
-      "tag": "v2.3.2"
-    },
-    "hb-jksv": {
-      "repo": "J-D-K/JKSV",
-      "regex": [".*\\.nro"],
-      "steps": [
-        {
-          "name": "create_dir",
-          "arguments": ["switch/jksv"]
-        },
-        {
-          "name": "move",
-          "arguments": ["JKSV.nro", "switch/jksv"]
-        }
-      ],
-      "key": "hb-jksv",
-      "tag": "02/23/2023"
-    },
-    "hb-ldn_mitm": {
-      "repo": "spacemeowx2/ldn_mitm",
-      "regex": [".*ldn_mitm.*\\.zip"],
-      "steps": [
-        {
-          "name": "extract",
-          "arguments": [".*ldn_mitm.*\\.zip"]
-        },
-        {
-          "name": "delete",
-          "arguments": ["atmosphere/contents/4200000000000010/flags/boot2.flag"]
-        },
-        {
-          "name": "create_file",
-          "arguments": [
-            "atmosphere/contents/4200000000000010/toolbox.json",
-            "{\"name\": \"ldn_mitm\",\"tid\": \"4200000000000010\",\"requires_reboot\": true}"
-          ]
-        }
-      ],
-      "key": "hb-ldn_mitm",
-      "tag": ""
-    },
-    "hb-nx-activity-log": {
-      "repo": "zdm65477730/NX-Activity-Log",
-      "regex": [".*NX-Activity-Log.*\\.zip"],
-      "steps": [
-        {
-          "name": "extract",
-          "arguments": [".*NX-Activity-Log.*\\.zip"]
-        }
-      ],
-      "key": "hb-nx-activity-log",
-      "tag": "1.5.0"
-    },
-    "hb-nx-themes-installer": {
-      "repo": "exelix11/SwitchThemeInjector",
-      "regex": [".*NXThemesInstaller.*\\.nro"],
-      "steps": [
-        {
-          "name": "create_dir",
-          "arguments": ["switch/NXThemesInstaller"]
-        },
-        {
-          "name": "move",
-          "arguments": [
-            "NXThemesInstaller.nro",
-            "switch/NXThemesInstaller/NXThemesInstaller.nro"
-          ]
-        }
-      ],
-      "key": "hb-nx-themes-installer",
-      "tag": ""
-    },
-    "hb-nxshell": {
-      "repo": "joel16/NX-Shell",
-      "regex": [".*NX-Shell.*\\.nro"],
-      "steps": [
-        {
-          "name": "create_dir",
-          "arguments": ["switch/NX-Shell"]
-        },
-        {
-          "name": "move",
-          "arguments": ["NX-Shell.nro", "switch/NX-Shell/NX-Shell.nro"]
-        }
-      ],
-      "key": "hb-nxshell",
-      "tag": "4.01"
-    },
-    "hb-salty-nx-tool": {
-      "repo": "masagrator/SaltyNX-Tool",
-      "regex": [".*SaltyNX-Tool.*\\.zip"],
-      "steps": [
-        {
-          "name": "extract",
-          "arguments": [".*SaltyNX-Tool.*\\.zip"]
-        },
-        {
-          "name": "create_dir",
-          "arguments": ["switch/SaltyNX-Tool"]
-        },
-        {
-          "name": "move",
-          "arguments": [
-            "SaltyNX-Tool.nro",
-            "switch/SaltyNX-Tool/SaltyNX-Tool.nro"
-          ]
-        }
-      ],
-      "key": "hb-salty-nx-tool",
-      "tag": ""
-    },
-    "hb-simple-mod-downloader": {
-      "repo": "PoloNX/SimpleModDownloader",
-      "regex": [".*SimpleModDownloader.*\\.nro"],
-      "steps": [
-        {
-          "name": "create_dir",
-          "arguments": ["switch/SimpleModDownloader"]
-        },
-        {
-          "name": "move",
-          "arguments": [
-            "SimpleModDownloader.nro",
-            "switch/SimpleModDownloader/SimpleModDownloader.nro"
-          ]
-        }
-      ],
-      "key": "hb-simple-mod-downloader",
-      "tag": "2.0.0"
-    },
-    "hb-simple-mod-manager": {
-      "repo": "nadrino/SimpleModManager",
-      "regex": [".*SimpleModManager.nro"],
-      "steps": [
-        {
-          "name": "create_dir",
-          "arguments": ["switch/SimpleModManager"]
-        },
-        {
-          "name": "move",
-          "arguments": [
-            "SimpleModManager.nro",
-            "switch/SimpleModManager/SimpleModManager.nro"
-          ]
-        }
-      ],
-      "key": "hb-simple-mod-manager",
-      "tag": "2.1.2"
-    },
-    "hb-switch-time": {
-      "repo": "3096/switch-time",
-      "regex": [".*switch-time.*\\.nro"],
-      "steps": [
-        {
-          "name": "create_dir",
-          "arguments": ["switch/switch-time"]
-        },
-        {
-          "name": "move",
-          "arguments": ["switch-time.nro", "switch/switch-time/switch-time.nro"]
-        }
-      ],
-      "key": "hb-switch-time",
-      "tag": "0.1.1"
-    },
-    "hb-sysclk": {
-      "repo": "retronx-team/sys-clk",
-      "regex": [".*sys-clk.*\\.zip"],
-      "steps": [
-        {
-          "name": "extract",
-          "arguments": [".*sys-clk.*\\.zip"]
-        },
-        {
-          "name": "create_dir",
-          "arguments": ["switch/sys-clk-manager"]
-        },
-        {
-          "name": "move",
-          "arguments": [
-            "switch/sys-clk-manager.nro",
-            "switch/sys-clk-manager/sys-clk-manager.nro"
-          ]
-        },
-        {
-          "name": "delete",
-          "arguments": ["README.md"]
-        },
-        {
-          "name": "delete",
-          "arguments": ["atmosphere/contents/00FF0000636C6BFF/flags/boot2.flag"]
-        },
-        {
-          "name": "create_file",
-          "arguments": [
-            "atmosphere/contents/00FF0000636C6BFF/toolbox.json",
-            "{\"name\": \"sys-clk\",\"tid\": \"00FF0000636C6BFF\",\"requires_reboot\": true}"
-          ]
-        }
-      ],
-      "key": "hb-sysclk",
-      "tag": "2.0.0-rc"
-    },
-    "hb-tinfoil": {
-      "repo": "tinfoil",
-      "regex": [],
-      "link": "https://tinfoil.media/repo/Tinfoil%20Self%20Installer%20%5B050000BADDAD0000%5D%5B17.0%5D%5Bv3%5D.zip",
-      "filename": "tinfoil.zip",
-      "steps": [
-        {
-          "name": "extract",
-          "arguments": ["tinfoil.zip"]
-        },
-        {
-          "name": "create_file",
-          "arguments": [
-            "switch/tinfoil/locations.conf",
-            "[\"usb:/\",\"usbfs:/\",\"sdmc:/\",\"sdmc:/roms/\",\"system:/\",\"user:/\",\"safe:/\",{\"url\":\"https://e.cchi.me/\",\"title\":\"Ecchi Save Project\",\"enabled\":0},{\"url\":\"https://tiny.cc/eeveesaveproject\",\"title\":\"Eevee Save Project\",\"enabled\":1},{\"url\":\"https://liberashop.rs/roms\",\"title\":\"LiberaShop Retro ROMs\",\"enabled\":1},{\"url\":\"https://liberashop.rs/\",\"title\":\"LiberaCDN\",\"enabled\":1}]"
-          ]
-        }
-      ],
-      "key": "hb-tinfoil",
-      "tag": ""
-    },
-    "ovl-edizon": {
-      "repo": "proferabg/EdiZon-Overlay",
-      "regex": [".*EdiZon-Overlay.*\\.zip"],
-      "steps": [
-        {
-          "name": "extract",
-          "arguments": [".*EdiZon-Overlay.*\\.zip"]
-        }
-      ],
-      "key": "ovl-edizon",
-      "tag": "v1.0.7"
-    },
-    "ovl-quickntp": {
-      "repo": "cynagenautes/QuickNTP",
-      "regex": [".*QuickNTP.*\\.ovl"],
-      "steps": [
-        {
-          "name": "create_dir",
-          "arguments": ["switch/.overlays"]
-        },
-        {
-          "name": "move",
-          "arguments": ["QuickNTP.ovl", "switch/.overlays/QuickNTP.ovl"]
-        }
-      ],
-      "key": "ovl-quickntp",
-      "tag": "1.2.8"
-    },
-    "ovl-reversenx-rt": {
-      "repo": "masagrator/ReverseNX-RT",
-      "regex": [".*ReverseNX-RT.*\\.ovl"],
-      "dependence": ["sysmodule-salty-nx"],
-      "steps": [
-        {
-          "name": "create_dir",
-          "arguments": ["switch/.overlays"]
-        },
-        {
-          "name": "move",
-          "arguments": [
-            "ReverseNX-RT-ovl.ovl",
-            "switch/.overlays/ReverseNX-RT.ovl"
-          ]
-        }
-      ],
-      "key": "ovl-reversenx-rt",
-      "tag": "2.0.0"
-    },
-    "ovl-status-monitor-overlay": {
-      "repo": "masagrator/Status-Monitor-Overlay",
-      "regex": [".*Status-Monitor-Overlay.*\\.zip"],
-      "steps": [
-        {
-          "name": "extract",
-          "arguments": [".*Status-Monitor-Overlay.*\\.zip"]
-        }
-      ],
-      "key": "ovl-status-monitor-overlay",
-      "tag": "1.0.3a"
-    },
-    "ovl-sysmodules": {
-      "repo": "WerWolv/ovl-sysmodules",
-      "regex": [".*ovlSysmodules.*\\.ovl"],
-      "steps": [
-        {
-          "name": "create_dir",
-          "arguments": ["switch/.overlays"]
-        },
-        {
-          "name": "move",
-          "arguments": [
-            "ovlSysmodules.ovl",
-            "switch/.overlays/ovlSysmodules.ovl"
-          ]
-        }
-      ],
-      "key": "ovl-sysmodules",
-      "tag": "v1.3.1"
-    },
-    "ovl-teslamenu": {
-      "repo": "hax4dazy/Tesla-Menu",
-      "regex": [".*ovlmenu.*\\.zip"],
-      "steps": [
-        {
-          "name": "extract",
-          "arguments": [".*ovlmenu.*\\.zip"]
-        },
-        {
-          "name": "create_dir",
-          "arguments": ["config/tesla"]
-        },
-        {
-          "name": "create_file",
-          "arguments": [
-            "config/tesla/config.ini",
-            "[tesla]\nkey_combo = ZL+ZR+DDOWN"
-          ]
-        }
-      ],
-      "key": "ovl-teslamenu",
-      "tag": "v1.2.2"
-    },
-    "sysmodule-missioncontrol": {
-      "repo": "ndeadly/MissionControl",
-      "regex": [".*MissionControl.*\\.zip"],
-      "steps": [
-        {
-          "name": "extract",
-          "arguments": [".*MissionControl.*\\.zip"]
-        },
-        {
-          "name": "delete",
-          "arguments": ["atmosphere/contents/010000000000bd00/flags/boot2.flag"]
-        }
-      ],
-      "key": "sysmodule-missioncontrol",
-      "tag": "v0.11.0"
-    },
-    "sysmodule-nxovlloader": {
-      "repo": "WerWolv/nx-ovlloader",
-      "regex": [".*nx-ovlloader.*\\.zip"],
-      "steps": [
-        {
-          "name": "extract",
-          "arguments": [".*nx-ovlloader.*\\.zip"]
-        }
-      ],
-      "key": "sysmodule-nxovlloader",
-      "tag": "v1.0.7"
-    },
-    "sysmodule-salty-nx": {
-      "repo": "masagrator/SaltyNX",
-      "regex": [".*SaltyNX.*\\.zip"],
-      "steps": [
-        {
-          "name": "extract",
-          "arguments": [".*SaltyNX.*\\.zip"]
-        }
-      ],
-      "key": "sysmodule-salty-nx",
-      "tag": "0.7.3"
-    },
-    "sysmodule-syscon": {
-      "repo": "cathery/sys-con",
-      "regex": [".*sys-con.*\\.zip"],
-      "steps": [
-        {
-          "name": "extract",
-          "arguments": [".*sys-con.*\\.zip"]
-        },
-        {
-          "name": "delete",
-          "arguments": ["atmosphere/contents/690000000000000D/flags/boot2.flag"]
-        }
-      ],
-      "key": "sysmodule-syscon",
-      "tag": "v0.6.4"
-    },
-    "sysmodule-sysftpdlight": {
-      "repo": "cathery/sys-ftpd",
-      "regex": [".*sys-ftpd-light.*\\.zip"],
-      "steps": [
-        {
-          "name": "extract",
-          "arguments": [".*sys-ftpd-light.*\\.zip"]
-        },
-        {
-          "name": "delete",
-          "arguments": ["atmosphere/contents/420000000000000E/flags/boot2.flag"]
-        },
-        {
-          "name": "replace_content",
-          "arguments": ["config/sys-ftpd/config.ini", "user:=", "user:=deepsea"]
-        },
-        {
-          "name": "replace_content",
-          "arguments": [
-            "config/sys-ftpd/config.ini",
-            "password:=",
-            "password:=secretpass"
-          ]
-        }
-      ],
-      "key": "sysmodule-sysftpdlight",
-      "tag": "1.0.4"
-    },
-    "sysmodule-sys-patch": {
-      "repo": "sys-patch",
-      "regex": [],
-      "link": "https://sigmapatches.su/sys-patch.zip",
-      "filename": "sys-patch.zip",
-      "steps": [
-        {
-          "name": "extract",
-          "arguments": ["sys-patch.zip"]
-        }
-      ],
-      "key": "sysmodule-sys-patch",
-      "tag": ""
-    }
-  }
 }
